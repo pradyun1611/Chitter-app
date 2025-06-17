@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html, body {
+        @apply h-full
+    }
+
+    .post {
+        @apply  grow border border-yellow-500 border-4 rounded-2xl m-10 mb-0
+    }
+
+    .topbar {
+        @apply hover:bg-gray-100 hover:dark:bg-zinc-700 hover:cursor-pointer transition duration-200
+    }
+
+    .error {
+        @apply text-red-500
+    }
+
+    .editInput {
+        @apply text-black grow px-2 py-1 border border-yellow-500 rounded-md
+    }
+
+    .editDiv {
+        @apply flex w-2/3 mb-3
+    }
+
+    .editLabel {
+        @apply w-1/3 py-2
+    }
+}
