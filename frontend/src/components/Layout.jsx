@@ -171,9 +171,9 @@ function Layout({children, activeTab}) {
                         </button>
                     </div>
                     <div className='m-2'><a target='blank' href='https://github.com/pradyun1611'>{darkMode ? (
-                        <img className='h-7 w-7' src='/github-mark/github-mark-white.svg' />
+                        <img className='h-7 w-7' src='/github-mark/github-mark-white.svg' alt='github'/>
                     ) : (
-                        <img className='h-7 w-7' src='/github-mark/github-mark.svg'/>
+                        <img className='h-7 w-7' src='/github-mark/github-mark.svg' alt='github'/>
                     )}</a></div>
                     {user ? (
                         <>
