@@ -177,7 +177,7 @@ function Layout({children, activeTab}) {
                     )}</a></div>
                     {user ? (
                         <>
-                        <Link className='h-full m-2 flex items-center justify-center' to={`/user/${curUser._id}`}><img src={curUser.pfp} alt='pfp' className='h-7 w-7 object-cover rounded-full'/></Link>
+                        <Link className='h-full m-2 flex items-center justify-center' to={`/user/${curUser._id}`}><img src={curUser.pfp} alt='pfp' className='h-8 w-8 object-cover rounded-full mt-1'/></Link>
                         <button onClick={handleLogout} className='bg-red-500 w-1/5 h-9 rounded-xl text-white m-2'>Logout</button>
                         </>
                     ) : (
