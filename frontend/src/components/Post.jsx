@@ -74,7 +74,7 @@ function Post(props) {
             <div className="flex mb-3 w-full justify-between pr-2">
                 <Link className='flex' to={`/user/${props.user._id}`}>
                     <div>
-                        <img src={`${process.env.REACT_APP_API_URL}/pfp/${props.user.pfp}`} alt="pfp" className="h-12 w-12 object-cover mt-1 ml-1 rounded-full"/>
+                        <img src={props.user.pfp} alt="pfp" className="h-12 w-12 object-cover mt-1 ml-1 rounded-full"/>
                     </div>
                     <div className="ml-3">
                         <p className="text-xl">{props.user.name}</p>

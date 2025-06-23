@@ -135,7 +135,7 @@ function AccountPage() {
         <Layout>
         <div className="flex h-80">
             <div className='flex flex-col w-1/3 items-center'>
-                <img src={`${process.env.REACT_APP_API_URL}/pfp/${userData.pfp}`} alt='pfp' className='h-48 w-48 object-cover my-5 rounded-full'/>
+                <img src={userData.pfp} alt='pfp' className='h-48 w-48 object-cover my-5 rounded-full'/>
                 <p className='text-2xl'>{userData.name}</p>
                 <p className='text-gray-400'>@{userData.username}</p>
             </div>

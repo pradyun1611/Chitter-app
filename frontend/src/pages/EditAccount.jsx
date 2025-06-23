@@ -126,7 +126,7 @@ function EditAccount() {
         <Layout>
             <div className="h-screen w-full flex justify-center">
                 <form onSubmit={handleSubmit} className="flex flex-col h-4/5 w-1/2 items-center justify-center">
-                    <img className="object-cover mb-5 h-32 w-32 rounded-full" src={`${process.env.REACT_APP_API_URL}/pfp/${curUser.pfp}`} alt="pfp" />
+                    <img className="object-cover mb-5 h-32 w-32 rounded-full" src={curUser.pfp} alt="pfp" />
                     <button type="button" onClick={() => setUpload(!upload)} className="px-3 py-2 mb-5 rounded-lg bg-yellow-500 text-white">change profile picture</button>
                     {upload && 
                         <input type="file" accept="image/*" onChange={(e) => setSelectedFile(e.target.files[0])} className="px-3 py-2 mb-5 rounded-lg bg-yellow-500 text-white"></input>

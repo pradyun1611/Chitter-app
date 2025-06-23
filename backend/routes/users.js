@@ -32,24 +32,12 @@ router.delete('/:id', userController.deleteUser)
 // UPLOAD pfp
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const User = require('../models/userModel');
-const fs = require('fs')
+const { storage } = require('../utils/cloudinary'); // ✅ NEW
+const upload = multer({ storage }); // ✅ Cloudinary storage now
 
-// === Multer Storage Config ===
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/pfp');
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const filename = `${req.params.id}_${Date.now()}${ext}`;
-    cb(null, filename);
-  },
-});
-
-const upload = multer({ storage });
-
-// === Upload Profile Picture & Delete Old ===
+// === Upload Profile Picture to Cloudinary ===
 router.patch('/upload/:id', upload.single('pfp'), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -57,23 +45,13 @@ router.patch('/upload/:id', upload.single('pfp'), async (req, res) => {
 
     const oldPfp = user.pfp;
 
-    // Update user profile picture
-    user.pfp = req.file.filename;
+    // ✅ Save the Cloudinary URL
+    user.pfp = req.file.path; // This will be a public CDN URL
     await user.save();
-
-    // Delete old file if not default
-    if (oldPfp && oldPfp !== 'pfp.png') {
-      const oldPath = path.join(__dirname, '..', 'public', 'pfp', oldPfp);
-      fs.unlink(oldPath, (err) => {
-        if (err && err.code !== 'ENOENT') {
-          console.error('Failed to delete old pfp:', err);
-        }
-      });
-    }
 
     res.status(200).json(user);
   } catch (err) {
-    console.error('Upload error:', err);
+    console.error('Cloudinary Upload Error:', err);
     res.status(500).json({ error: err.message });
   }
 });
