@@ -88,6 +88,8 @@ function EditAccount() {
             body: formData
         });
 
+        const json = res.json();
+
         if (res.ok) {
             const token = user.token;
             const updatedUser = { ...json, token };
