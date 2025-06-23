@@ -83,7 +83,7 @@ function EditAccount() {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/user/upload/${user._id}`, {
             method: 'PATCH',
             headers: {
-            Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${user.token}`
             },
             body: formData
         });
@@ -94,7 +94,8 @@ function EditAccount() {
             const token = user.token;
             const updatedUser = { ...json, token };
             localStorage.setItem("user", JSON.stringify(updatedUser));
-            setCurUser(json)
+            dispatch({ type: "LOGIN", payload: updatedUser });
+            setCurUser(json);
         } else {
             console.error(json.error || json);
         }

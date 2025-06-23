@@ -40,21 +40,28 @@ router.patch('/upload/:id', upload.single('pfp'), async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const oldPfpUrl = user.pfp;
+    const oldPfp = user.pfp;
 
-    // ✅ Save new Cloudinary image URL
-    user.pfp = req.file.path; // This is the Cloudinary secure_url
+    // ✅ Cloudinary URL should be here
+    const newPfpUrl = req.file.path;
+
+    // ✅ Save to DB
+    user.pfp = newPfpUrl;
     await user.save();
 
-    // ✅ Delete old image from Cloudinary if it was not the default
-    if (oldPfpUrl && !oldPfpUrl.includes('default_pfp')) {
-      const segments = oldPfpUrl.split('/');
-      const publicIdWithExtension = segments[segments.length - 1];
-      const publicId = 'pfp/' + publicIdWithExtension.split('.')[0]; // remove extension
+    // ✅ Delete old pfp from Cloudinary if it's not the default
+    if (oldPfp && !oldPfp.includes('default_pfp')) {
+      const segments = oldPfp.split('/');
+      const publicIdWithExt = segments[segments.length - 1];
+      const publicId = 'pfp/' + publicIdWithExt.split('.')[0]; // remove extension
       await cloudinary.uploader.destroy(publicId);
     }
 
     res.status(200).json(user);
+
+    console.log('Uploaded file info:', req.file);
+    console.log('Updated user:', user);
+
   } catch (err) {
     console.error('Upload error:', err);
     res.status(500).json({ error: err.message });
