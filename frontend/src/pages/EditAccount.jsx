@@ -88,7 +88,7 @@ function EditAccount() {
             body: formData
         });
 
-        const json = res.json();
+        const json = await res.json();
 
         if (res.ok) {
             const token = user.token;
