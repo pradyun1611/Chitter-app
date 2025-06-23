@@ -80,24 +80,28 @@ function EditAccount() {
         const formData = new FormData();
         formData.append('pfp', selectedFile);
 
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/user/upload/${user._id}`, {
-            method: 'PATCH',
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            },
-            body: formData
-        });
+        try {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/user/upload/${user._id}`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                },
+                body: formData
+            });
 
-        const json = await res.json();
+            const json = await res.json();
 
-        if (res.ok) {
-            const token = user.token;
-            const updatedUser = { ...json, token };
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            dispatch({ type: "LOGIN", payload: updatedUser });
-            setCurUser(json);
-        } else {
-            console.error(json.error || json);
+            if (res.ok) {
+                const token = user.token;
+                const updatedUser = { ...json, token };
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                dispatch({ type: "LOGIN", payload: updatedUser });
+                setCurUser(json);
+            } else {
+                console.error("upload failed: ", json.error || json);
+            }
+        } catch (error) {
+            console.error("Network or parsing error:", error);
         }
     };
 
