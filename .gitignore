@@ -16,4 +16,4 @@ build/
 *.swp
 
 # Ignore uploaded profile pictures
-# /backend/public/pfp/
+/backend/public/pfp/
