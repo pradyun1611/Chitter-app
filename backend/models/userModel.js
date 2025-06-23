@@ -27,7 +27,7 @@ const userSchema = new Schema({
     },
     pfp: {
         type: String,
-        default: 'pfp.png'
+        default: "https://res.cloudinary.com/dqfmf9j9s/image/upload/v1750685780/pfp/default_pfp.png"
     },
     followers: [{
         type: Schema.Types.ObjectId,

@@ -31,27 +31,32 @@ router.delete('/:id', userController.deleteUser)
 
 // UPLOAD pfp
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const User = require('../models/userModel');
-const { storage } = require('../utils/cloudinary'); // ✅ NEW
-const upload = multer({ storage }); // ✅ Cloudinary storage now
+const { storage, cloudinary } = require('../utils/cloudinary');
+const upload = multer({ storage });
 
-// === Upload Profile Picture to Cloudinary ===
 router.patch('/upload/:id', upload.single('pfp'), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const oldPfp = user.pfp;
+    const oldPfpUrl = user.pfp;
 
-    // ✅ Save the Cloudinary URL
-    user.pfp = req.file.path; // This will be a public CDN URL
+    // ✅ Save new Cloudinary image URL
+    user.pfp = req.file.path; // This is the Cloudinary secure_url
     await user.save();
+
+    // ✅ Delete old image from Cloudinary if it was not the default
+    if (oldPfpUrl && !oldPfpUrl.includes('default_pfp')) {
+      const segments = oldPfpUrl.split('/');
+      const publicIdWithExtension = segments[segments.length - 1];
+      const publicId = 'pfp/' + publicIdWithExtension.split('.')[0]; // remove extension
+      await cloudinary.uploader.destroy(publicId);
+    }
 
     res.status(200).json(user);
   } catch (err) {
-    console.error('Cloudinary Upload Error:', err);
+    console.error('Upload error:', err);
     res.status(500).json({ error: err.message });
   }
 });

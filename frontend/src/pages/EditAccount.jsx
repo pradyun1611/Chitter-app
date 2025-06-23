@@ -75,23 +75,20 @@ function EditAccount() {
 
     const [selectedFile, setSelectedFile] = useState(null)
 
-    const handleImageUpload = async () => {
+    const handleImageUpload = async (e) => {
         if (!selectedFile) return;
-
         const formData = new FormData();
-        formData.append("pfp", selectedFile);
+        formData.append('pfp', selectedFile);
 
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/upload/${curUser._id}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/user/upload/${user._id}`, {
             method: 'PATCH',
             headers: {
-                'Authorization': `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`
             },
             body: formData
         });
 
-        const json = await response.json();
-
-        if (response.ok) {
+        if (res.ok) {
             const token = user.token;
             const updatedUser = { ...json, token };
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -100,6 +97,7 @@ function EditAccount() {
             console.error(json.error || json);
         }
     };
+
 
     const [deleting, setDeleting] = new useState(false)
 
