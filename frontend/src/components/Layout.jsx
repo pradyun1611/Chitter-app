@@ -193,7 +193,7 @@ function Layout({children, activeTab}) {
                                 id={user._id}
                                 name={user.name}
                                 username={user.username}
-                                pfp={`${process.env.REACT_APP_API_URL}/pfp/${user.pfp}`}
+                                pfp={user.pfp}
                                 />
                             ))}
                         </div>
@@ -213,7 +213,7 @@ function Layout({children, activeTab}) {
                             <h1 className='text-2xl font-bold mt-10 mx-2'>Who to Follow</h1>
                             <div className='flex flex-col dark:bg-zinc-800 border border-yellow-500 m-2 pb-2 rounded-xl'>
                                 {users && users.filter((u) => u._id !== user._id).sort((a, b) => b.followers.length - a.followers.length).slice(0, 5).map((user) => (
-                                    <Account id={user._id} name={user.name} username={user.username} pfp={`${process.env.REACT_APP_API_URL}/pfp/${user.pfp}`} />
+                                    <Account id={user._id} name={user.name} username={user.username} pfp={user.pfp} />
                                 ))}
                             </div>
                         </>
