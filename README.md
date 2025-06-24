@@ -51,13 +51,7 @@ Chitter is a full-stack web application modeled after Twitter, enabling users to
 **Deployment**: Render  
 **State Management**: Context API + useReducer
 
-## Screenshots
-
-- ![Home Feed](screenshots/feed.png)
-- ![Profile](screenshots/profile.png)
-- ![Edit Account](screenshots/edit.png)
-
 ## Deployment Links
 
 - **Frontend**: [https://chitter-app-frontend.onrender.com](https://chitter-app-frontend.onrender.com)
-- **Backend**: [https://chitter-app-backend.onrender.com](https://chitter-app-backend.onrender.com)
+- **Backend API**: [https://chitter-app-backend.onrender.com](https://chitter-app-backend.onrender.com)
