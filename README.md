@@ -2,7 +2,7 @@
 
 Chitter is a full-stack web application modeled after Twitter, enabling users to create, interact with, and manage short text-based posts called *chits*. Unlike a frontend-only clone, Chitter features a fully integrated backend with real-time data persistence, user authentication, and media handling. It supports user registration, secure login, chit creation and deletion, liking functionality, profile management, and image uploads using Cloudinary. The frontend and backend are deployed independently using Render, with secure API communication and environment-based configuration.
 
-## 🚀 Features
+## Features
 
 - **User Authentication**
   - Secure login and signup functionality using JSON Web Tokens (JWT).
@@ -41,7 +41,7 @@ Chitter is a full-stack web application modeled after Twitter, enabling users to
   - Environment variables configured securely to handle API URLs and secret keys.
   - CORS policy explicitly configured to allow frontend-backend communication across domains.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend**: React, Tailwind CSS, React Router  
 **Backend**: Node.js, Express.js, MongoDB, Mongoose  
@@ -51,16 +51,13 @@ Chitter is a full-stack web application modeled after Twitter, enabling users to
 **Deployment**: Render  
 **State Management**: Context API + useReducer
 
-## 📷 Screenshots
-
-> _(Add screenshots of your login page, home feed, user profile, and edit account page here)_  
-> Example:
+## Screenshots
 
 - ![Home Feed](screenshots/feed.png)
 - ![Profile](screenshots/profile.png)
 - ![Edit Account](screenshots/edit.png)
 
-## 🌐 Deployment Links
+## Deployment Links
 
 - **Frontend**: [https://chitter-app-frontend.onrender.com](https://chitter-app-frontend.onrender.com)
 - **Backend**: [https://chitter-app-backend.onrender.com](https://chitter-app-backend.onrender.com)
