@@ -94,6 +94,9 @@ const rateLimiter = (req, res, next) => {
     next();
 };
 
+app.use('/user', blockBadUserAgents);
+app.use('/user', rateLimiter);
+
 // -------------------------------------
 
 
