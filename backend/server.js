@@ -46,6 +46,54 @@ const blockBadUserAgents = (req, res, next) => {
     next();
 };
 
+// --- Layer 2: Rate Limiting ---
+
+// This is a simple in-memory store.
+// For production, use Redis or a similar external store.
+const ipRequestCounts = {};
+
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10; // Max 10 requests per IP per minute
+
+// Enable this if your app is behind a proxy (like Nginx or Heroku)
+// This makes `req.ip` return the *real* user IP.
+app.set('trust proxy', 1);
+
+const rateLimiter = (req, res, next) => {
+    const ip = req.ip; // Get the user's IP address
+    const now = Date.now();
+
+    // Initialize record for this IP if it doesn't exist
+    if (!ipRequestCounts[ip]) {
+        ipRequestCounts[ip] = {
+            count: 0,
+            firstRequestTime: now
+        };
+    }
+
+    const ipData = ipRequestCounts[ip];
+
+    // Check if the window has reset
+    if (now - ipData.firstRequestTime > RATE_LIMIT_WINDOW_MS) {
+        // Reset the count and time
+        ipData.count = 1;
+        ipData.firstRequestTime = now;
+    } else {
+        // Increment the count
+        ipData.count++;
+    }
+
+    // Enforce the limit
+    if (ipData.count > MAX_REQUESTS_PER_WINDOW) {
+        console.log(`[RATE LIMIT] Throttling IP: ${ip}`);
+        return res.status(429).send('Too Many Requests. Please try again later.');
+    }
+
+    req.requestCountData = ipData;
+    // If the user is within limits, continue
+    next();
+};
+
 // -------------------------------------
 
 
