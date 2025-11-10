@@ -20,6 +20,34 @@ app.use(cors({
   credentials: true
 }));
 
+// --- Layer 1: User-Agent Blocking ---
+
+// A list of common, simple bot User-Agents.
+// In a real app, this list would be much larger.
+const BAD_USER_AGENTS = [
+    'python-requests',
+    'Scrapy',
+    'Wget',
+    'curl'
+];
+
+const blockBadUserAgents = (req, res, next) => {
+    const userAgent = req.headers['user-agent'] || '';
+
+    // Check if the User-Agent contains any of our bad strings
+    const isBadAgent = BAD_USER_AGENTS.some(agent => userAgent.toLowerCase().includes(agent.toLowerCase()));
+
+    if (isBadAgent) {
+        console.log(`[FORBIDDEN] Blocked bad User-Agent: ${userAgent}`);
+        return res.status(403).send('Access Forbidden: Your client is not permitted.');
+    }
+
+    // If the User-Agent is fine, continue to the next middleware
+    next();
+};
+
+// -------------------------------------
+
 
 //routes
 app.use('/chit', chitRoutes)
