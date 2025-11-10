@@ -81,6 +81,7 @@ const rateLimiter = (req, res, next) => {
     } else {
         // Increment the count
         ipData.count++;
+        console.log(ipData.count);
     }
 
     // Enforce the limit
