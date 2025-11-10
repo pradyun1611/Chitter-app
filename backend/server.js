@@ -53,7 +53,7 @@ const blockBadUserAgents = (req, res, next) => {
 const ipRequestCounts = {};
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 10; // Max 10 requests per IP per minute
+const MAX_REQUESTS_PER_WINDOW = 100; // Max 10 requests per IP per minute
 
 // Enable this if your app is behind a proxy (like Nginx or Heroku)
 // This makes `req.ip` return the *real* user IP.
